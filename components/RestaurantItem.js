@@ -39,17 +39,3 @@ const RestaurantInfo = () => (
     </View>
 
 )
-
-const RestaurantInfOne = () => (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
-        <View>
-            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>FarmHouse kitchen cusine</Text>
-            <Text style={{ fontSize: 13, color: 'gray' }}>30-45 mins</Text>
-        </View>
-        <View style={{ backgroundColor: '#eee', height: 30, width: 30, justifyContent: "center", alignItems: 'center', borderWidth: 1, borderRadius: 15 }}>
-            <Text >4.5</Text>
-        </View>
-
-    </View>
-
-)
