@@ -45,5 +45,6 @@ export default function SearchBar() {
                 </View>}
             />
         </View>
-    )
+    )//ojgdskjfljknljkbnljk
+    
 }
