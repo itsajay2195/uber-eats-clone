@@ -6,12 +6,17 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const YELP_API_KEY="AOD7r6gtHSX0MddfQV4RRGGfMDsO04h_JwZbMk3CG8HlSVBHLNmzq3yXo4BcBSEElRNthsqFjtU1cIq4NtEWjNheExMoDA1Flt573xh5xERkyiQSbIboNfDaiEFcYXYx" 
 
-export default function SearchBar() {
-  
+export default function SearchBar({cityHandler}) {
+     
 
     return (
         <View style={{marginTop:15,flexDirection:'row'}}>
             <GooglePlacesAutocomplete 
+            query={{key:""}}
+            onPress={(data,details=null)=>{
+                const city = data.description.split(",")[0]
+                cityHandler(city)
+            }}
             placeholder="Search"
             styles={{
                 textInput:{
