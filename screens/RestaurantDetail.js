@@ -10,7 +10,6 @@ export default function RestaurantDetail() {
             <About></About>
             <Divider width={1.8} style={{marginVertical:20}}></Divider>
             <MenuItem></MenuItem>
-            <Divider width={1.8} style={{marginVertical:20}}></Divider>
         </View>
     )
 }
