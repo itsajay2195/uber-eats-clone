@@ -24,6 +24,6 @@ const RestaurantImage =(props)=>(
     <Image source={{uri:props.image}} style={{width:'100%',height:100}}></Image>
 )
 
-const RestaurantText =(props)=><Text style={{fontSize:29,fontWeight:'600',marginTop:10,marginHorizontal:15}}>{props.title}</Text>
+const RestaurantText =(props)=><Text style={{fontSize:29,fontWeight:'600',marginTop:10,marginHorizontal:15}}>{props.name}</Text>
 
 const RestaurantDescription=(props)=><Text style={{marginTop:10,fontSize:15.5,fontWeight:'400',marginHorizontal:15}}>{props.description}</Text>
