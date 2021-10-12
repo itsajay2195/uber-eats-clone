@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import { Divider } from 'react-native-elements/dist/divider/Divider'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
+import { useDispatch } from 'react-redux'
 
 const items = [{
     title: "Paneer Butter Masala",
@@ -29,35 +30,45 @@ const items = [{
 }]
 
 
+
 const styles = StyleSheet.create({
     menuItemStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 20,
     },
-    titleStyle:{
-        fontSize:19,
-        fontWeight:'600'
+    titleStyle: {
+        fontSize: 19,
+        fontWeight: '600'
     }
 })
 export default function MenuItem() {
+    const dispatch = useDispatch();
+    const selectItem = (item) => dispatch({
+        type: 'ADD_TO_CART',
+        payload: item
+    })
+
+
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             {items.map((item, index) => (
-                <View  key={index}>
+                <View key={index}>
                     <View style={styles.menuItemStyle}>
-                    <BouncyCheckbox
-                    iconStyle={{borderColor:'lightgray',borderRadius:0}}
-                    fillColor="green"/>   
-                    <FoodInfo  food={item}></FoodInfo>
-                    <FoodImage food={item}></FoodImage>
+                        <BouncyCheckbox
+                            iconStyle={{ borderColor: 'lightgray', borderRadius: 0 }}
+                            fillColor="green"
+                            onPress={()=>console.warn(item)}
+                        />
+                        <FoodInfo food={item}></FoodInfo>
+                        <FoodImage food={item}></FoodImage>
+                    </View>
+                    <Divider width={0.5} orientation="vertical" style={{ marginHorizontal: 20 }} ></Divider>
                 </View>
-                    <Divider width={0.5} orientation="vertical" style={{marginHorizontal:20}} ></Divider>
-                </View>
-                
-                
+
+
             ))}
-            
+
         </ScrollView>
     )
 }
@@ -65,14 +76,14 @@ export default function MenuItem() {
 const FoodInfo = (props) => (
     <View style={{ width: 240, justifyContent: 'space-evenly' }}>
         <Text style={styles.titleStyle}>{props.food.title}</Text>
-        <Text style={{paddingBottom:10}}>{props.food.description}</Text>
+        <Text style={{ paddingBottom: 10 }}>{props.food.description}</Text>
         <Text>{props.food.price}</Text>
 
     </View>
 )
 
-const FoodImage=(props)=>(
+const FoodImage = (props) => (
     <View>
-        <Image source={{uri:props.food.image}} style={{width:100,height:100,borderRadius:8}}></Image>
+        <Image source={{ uri: props.food.image }} style={{ width: 100, height: 100, borderRadius: 8 }}></Image>
     </View>
 )

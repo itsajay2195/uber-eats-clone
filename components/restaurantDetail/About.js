@@ -2,9 +2,6 @@ import React from 'react'
 import { View, Text,Image } from 'react-native'
  
 
-// const image="https://media-cdn.tripadvisor.com/media/photo-s/17/4c/8c/1a/part-of-the-dining-hall.jpg"
-// const title = 'Farmhouse Kitchen Thai cuisine'
-// const description = 'Thai * comfort Food * $$ * :ticket * 4 start (2913+)' 
 
 export default function About(props) {
     const {name,image,price,categories, reviews,rating}=props.route.params

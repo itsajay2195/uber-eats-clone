@@ -11,7 +11,6 @@ export default function RestaurantDetail({route,navigation}) {
             <About route={route}></About>
             <Divider width={1.8} style={{marginVertical:20}}></Divider>
             <MenuItem></MenuItem>
-            <Text>Hi</Text>
             <ViewCart navigation={navigation} restaurantName={route.params.name}></ViewCart>
 
         </View>
