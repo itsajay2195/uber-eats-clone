@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
         fontWeight: '600'
     }
 })
-export default function MenuItem() {
+export default function MenuItem({restaurantName }) {
     const dispatch = useDispatch();
-    const selectItem = (item) => dispatch({
+    const  selectItem = (item,checkboxValue) => dispatch({
         type: 'ADD_TO_CART',
-        payload: item
+        payload: {...item, restaurantName: restaurantName, checkboxValue: checkboxValue}
     })
 
-
+ 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             {items.map((item, index) => (
@@ -58,7 +58,7 @@ export default function MenuItem() {
                         <BouncyCheckbox
                             iconStyle={{ borderColor: 'lightgray', borderRadius: 0 }}
                             fillColor="green"
-                            onPress={()=>console.warn(item)}
+                            onPress={(checkboxValue)=>selectItem(item,checkboxValue)}
                         />
                         <FoodInfo food={item}></FoodInfo>
                         <FoodImage food={item}></FoodImage>
