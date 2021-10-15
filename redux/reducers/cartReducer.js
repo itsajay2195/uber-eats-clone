@@ -8,6 +8,7 @@ let cartReducer=(state=defaultState,action)=>{
             let newState ={...state} 
             if(action.payload.checkboxValue){
                 // console.warn("ADD TO CART")
+              
                 newState.selectedItems={
                     items:[...newState.selectedItems.items,action.payload],
                     restaurantName:action.payload.restaurantName
