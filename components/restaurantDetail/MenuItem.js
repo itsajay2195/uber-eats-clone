@@ -57,7 +57,9 @@ export default function MenuItem({restaurantName }) {
 
     
     return (
+        
         <ScrollView showsVerticalScrollIndicator={false}>
+            {console.log('hi',cartItems.length)}
             {items.map((item, index) => (
                 <View key={index}>
                     <View style={styles.menuItemStyle}>
@@ -66,8 +68,10 @@ export default function MenuItem({restaurantName }) {
                             fillColor="green"
                             isChecked={ifFoodInTheCard(item,cartItems)}
                             onPress={(checkboxValue)=>{
-                                console.warn('value is',ifFoodInTheCard(item,cartItems))
-                                selectItem(item,checkboxValue)}}
+                                selectItem(item,checkboxValue)
+                                console.warn('value is',cartItems)}
+                            }
+                                
                         />
                         <FoodInfo food={item}></FoodInfo>
                         <FoodImage food={item}></FoodImage>

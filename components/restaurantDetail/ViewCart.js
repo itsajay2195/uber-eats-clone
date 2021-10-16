@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
 
 export default function ViewCart() {
-    const items = useSelector((state) => state.cartReducer.selectedItems.items)
+    const { items, restaurantName } = useSelector((state) => state.cartReducer.selectedItems)
     const [modalVisible, setModalVisible] = useState(false)
 
     // the following breakdwon is being made in the below piece of cod
@@ -14,31 +14,81 @@ export default function ViewCart() {
 
     const total = items.map((item) => Number(item.price.replace('INR', '')))
         .reduce((prev, cur) => prev + cur, 0)
-    // items.map((item)=>console.log('price is',item.price))
-    // console.warn('total is', total)
 
-    
+    const styles = StyleSheet.create({
+        modalContaier: {
+            flex: 1,
+            justifyContent: 'flex-end',
+            backgroundColor: 'rgba(0,0,0,0.7)'
+        },
+        modalCheckoutContaier: {
+            backgroundColor: 'white',
+            padding: 16,
+            height: 500,
+            borderWidth: 1
+        },
+        modalRestaurantName: {
+            textAlign: 'center',
+            fontWeight: '600',
+            fontSize: 15,
+            marginBottom: '10%'
+        },
+        modalFoodItemsContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingBottom: '2%',
+            borderBottomWidth: 1,
+            borderColor: 'gray',
+            marginBottom: '4%'
+        },
+        subtotalText: {
+            textAlign: 'left',
+            fontWeight: '600',
+            fontSize: 15,
+            marginBottom: 10
+        }
+    })
+    const checkoutModal = () => {
+        return (
+            <View style={styles.modalContaier}>
+                <View style={styles.modalCheckoutContaier}>
+                    <Text style={styles.modalRestaurantName}>{restaurantName}</Text>
+                    {items.map((item, index) => (
+                        <View style={styles.modalFoodItemsContainer}>
+                            <Text style={{ paddingHorizontal: '8%', fontWeight: '600', fontSize: 15 }}>{item.title}</Text>
+                            <Text style={{ paddingHorizontal: '8%', borderColor: 'gray' }}> {item.price}</Text>
+                        </View>))}
+
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={styles.subtotalText}> Subtotal</Text>
+                        <Text style={{ color: 'gray', fontSize: 15 }}> {total} INR</Text>
+                    </View>
+
+                    <TouchableOpacity
+                        style={{
+                            padding: 10,
+                            borderRadius: 30,
+                            flexDirection: 'row',
+                            backgroundColor: 'black'
+                        }}
+                        onPress={() => setModalVisible(false)}>
+                        <Text style={{ color: 'white' }}>Checkout</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+
+            </View>
+        )
+    }
+
     return (
 
         <>
             <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => setModalVisible(false)}>
-                <View style={{flex:1}}> 
-        
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
-                <TouchableOpacity
-                    style={{
-                        padding: 10,
-                        borderRadius: 30,
-                        flexDirection: 'row',
-                        backgroundColor: 'black'
-                    }}
-                    onPress={() => setModalVisible(false)}>
-                    <Text style={{ color: 'white' }}>Checkout</Text>
-                </TouchableOpacity>
-            </View>
 
-        
-    </View>
+                {checkoutModal()}
+
             </Modal>
             {total ?
 
