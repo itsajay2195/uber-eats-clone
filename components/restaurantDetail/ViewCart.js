@@ -56,27 +56,30 @@ export default function ViewCart() {
                     {items.map((item, index) => (
                         <View style={styles.modalFoodItemsContainer}>
                             <Text style={{ paddingHorizontal: '8%', fontWeight: '600', fontSize: 15 }}>{item.title}</Text>
-                            <Text style={{ paddingHorizontal: '8%', borderColor: 'gray' }}> {item.price}</Text>
+                            <Text style={{ paddingHorizontal: '8%', color: 'gray' }}> {item.price}</Text>
                         </View>))}
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={styles.subtotalText}> Subtotal</Text>
                         <Text style={{ color: 'gray', fontSize: 15 }}> {total} INR</Text>
                     </View>
-
-                    <TouchableOpacity
-                        style={{
-                            padding: 10,
-                            borderRadius: 30,
-                            flexDirection: 'row',
-                            backgroundColor: 'black'
-                        }}
-                        onPress={() => setModalVisible(false)}>
-                        <Text style={{ color: 'white' }}>Checkout</Text>
-                    </TouchableOpacity>
+                    <View style={{marginTop:20}}>
+                        <TouchableOpacity
+                            style={{
+                                marginHorizontal: '20%',
+                                padding:10,
+                                borderRadius: 30,
+                                flexDirection: 'row',
+                                justifyContent:'center',
+                                backgroundColor: 'black',
+                            }}
+                            onPress={() => setModalVisible(false)}>
+                            <Text style={{ color: 'white' }}>Checkout</Text>
+                        </TouchableOpacity>
+                    </View>
 
                 </View>
-
+                
 
             </View>
         )

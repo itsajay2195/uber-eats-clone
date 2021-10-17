@@ -25,16 +25,8 @@ let cartReducer=(state=defaultState,action)=>{
              return newState
 
          }
-        // case 'REMOVE_FROM_CART':{
-        //         let newState ={...state} 
-        //         newState.selectedItems={
-        //             items:[...newState.selectedItems.items,action.payload],
-        //             restaurantName:action.payload.restaurantName
-        //         }
-        //         console.warn(newState,'🖐' )
-        //         return newState
-    
-        // }     
+
+         
 
             
 

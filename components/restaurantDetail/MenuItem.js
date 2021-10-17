@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
         fontWeight: '600'
     }
 })
-export default function MenuItem({restaurantName }) {
+
+export default function MenuItem({restaurantName}) {
     const dispatch = useDispatch();
     const  selectItem = (item,checkboxValue) => dispatch({
         type: 'ADD_TO_CART',
