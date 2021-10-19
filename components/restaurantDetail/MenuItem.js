@@ -1,34 +1,11 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import { Divider } from 'react-native-elements/dist/divider/Divider'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 
-const items = [{
-    title: "Paneer Butter Masala",
-    description: "Paneer butter masala, also known as butter paneer is a rich & creamy curry made with paneer, spices, onions, tomatoes, cashews and butter.",
-    price: "250 INR",
-    image: "https://www.indianhealthyrecipes.com/wp-content/uploads/2020/12/paneer-butter-masala-recipe.jpg"
-},
-{
-    title: "Green Peas Masala",
-    description: "Greemn Peas Masala,is a rich & creamy curry made with Gren Peas, spices, onions, tomatoes, cashews and butter.",
-    price: "250 INR",
-    image: "https://www.vegrecipesofindia.com/wp-content/uploads/2015/03/matar-masala-recipe-2.jpg"
-},
-{
-    title: "Aloo Gobi Masala",
-    description: "Aloo Gobi Masala,is a rich & creamy curry made with Aloo,Gobi, spices, onions, tomatoes, cashews and butter.",
-    price: "250 INR",
-    image: "https://www.indianhealthyrecipes.com/wp-content/uploads/2019/03/aloo-gobi-recipe-500x500.jpg"
-},
-{
-    title: "Aloo Gobi Masala",
-    description: "Aloo Gobi Masala,is a rich & creamy curry made with Aloo,Gobi, spices, onions, tomatoes, cashews and butter.",
-    price: "250 INR",
-    image: "https://www.indianhealthyrecipes.com/wp-content/uploads/2019/05/chana-masala-recipe.jpg"
-}]
+
 
 
 
@@ -44,8 +21,9 @@ const styles = StyleSheet.create({
     }
 })
 
-export default function MenuItem({restaurantName}) {
+export default function MenuItem({restaurantName,checkBoxHidden,foods}) {
     const dispatch = useDispatch();
+    const [hideCheckBox,setHideCheckBox] = useState(checkBoxHidden)
     const  selectItem = (item,checkboxValue) => dispatch({
         type: 'ADD_TO_CART',
         payload: {...item, restaurantName: restaurantName, checkboxValue: checkboxValue}
@@ -61,19 +39,20 @@ export default function MenuItem({restaurantName}) {
         
         <ScrollView showsVerticalScrollIndicator={false}>
             {console.log('hi',cartItems.length)}
-            {items.map((item, index) => (
+            {foods.map((item, index) => (
                 <View key={index}>
                     <View style={styles.menuItemStyle}>
-                        <BouncyCheckbox
-                            iconStyle={{ borderColor: 'lightgray', borderRadius: 0 }}
-                            fillColor="green"
-                            isChecked={ifFoodInTheCard(item,cartItems)}
-                            onPress={(checkboxValue)=>{
-                                selectItem(item,checkboxValue)
-                                console.warn('value is',cartItems)}
-                            }
-                                
-                        />
+                        {hideCheckBox ? null
+                        : <BouncyCheckbox
+                        iconStyle={{ borderColor: 'lightgray', borderRadius: 0 }}
+                        fillColor="green"
+                        isChecked={ifFoodInTheCard(item,cartItems)}
+                        onPress={(checkboxValue)=>{
+                            selectItem(item,checkboxValue)
+                            console.warn('value is',cartItems)}
+                        }
+                            
+                    />}
                         <FoodInfo food={item}></FoodInfo>
                         <FoodImage food={item}></FoodImage>
                     </View>

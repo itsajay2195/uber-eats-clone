@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
+import firebase from '../../Firebase'
 
-export default function ViewCart() {
+export default function ViewCart({navigation}) {
     const { items, restaurantName } = useSelector((state) => state.cartReducer.selectedItems)
     const [modalVisible, setModalVisible] = useState(false)
 
@@ -14,6 +15,21 @@ export default function ViewCart() {
 
     const total = items.map((item) => Number(item.price.replace('INR', '')))
         .reduce((prev, cur) => prev + cur, 0)
+
+    const addOrderToFirebase=()=>{
+        const db = firebase.firestore(); 
+        db.collection("orders").add({
+            items:items,
+            restaurantName:restaurantName,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+
+        })
+        setModalVisible(false)
+        navigation.navigate('Order Completed',{restaurantName:restaurantName,total:total})
+
+    }   
+    
+    
 
     const styles = StyleSheet.create({
         modalContaier: {
@@ -73,7 +89,7 @@ export default function ViewCart() {
                                 justifyContent:'center',
                                 backgroundColor: 'black',
                             }}
-                            onPress={() => setModalVisible(false)}>
+                            onPress={() =>addOrderToFirebase()}>
                             <Text style={{ color: 'white' }}>Checkout</Text>
                         </TouchableOpacity>
                     </View>
