@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
 import firebase from '../../Firebase'
+import LottieView from 'lottie-react-native'
 
-export default function ViewCart({navigation}) {
+export default function ViewCart({ navigation }) {
     const { items, restaurantName } = useSelector((state) => state.cartReducer.selectedItems)
     const [modalVisible, setModalVisible] = useState(false)
+    const [loading, setloading] = useState(true)
 
     // the following breakdwon is being made in the below piece of cod
     // INR 250 will be striped to 250
@@ -16,20 +18,29 @@ export default function ViewCart({navigation}) {
     const total = items.map((item) => Number(item.price.replace('INR', '')))
         .reduce((prev, cur) => prev + cur, 0)
 
-    const addOrderToFirebase=()=>{
-        const db = firebase.firestore(); 
+    const addOrderToFirebase = () => {
+        setloading(true)
+        const db = firebase.firestore();
         db.collection("orders").add({
-            items:items,
-            restaurantName:restaurantName,
+            items: items,
+            restaurantName: restaurantName,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 
+        }).then(() => {
+            setTimeout(() => {
+                console.warn('inside then')
+                setloading(false)
+                setModalVisible(false)
+                navigation.navigate('Order Completed', { restaurantName: restaurantName, total: total })
+            }, 2500);
+        
         })
-        setModalVisible(false)
-        navigation.navigate('Order Completed',{restaurantName:restaurantName,total:total})
 
-    }   
-    
-    
+
+
+    }
+
+
 
     const styles = StyleSheet.create({
         modalContaier: {
@@ -79,23 +90,24 @@ export default function ViewCart({navigation}) {
                         <Text style={styles.subtotalText}> Subtotal</Text>
                         <Text style={{ color: 'gray', fontSize: 15 }}> {total} INR</Text>
                     </View>
-                    <View style={{marginTop:20}}>
+                    <View style={{ marginTop: 20 }}>
                         <TouchableOpacity
                             style={{
                                 marginHorizontal: '20%',
-                                padding:10,
+                                padding: 10,
                                 borderRadius: 30,
                                 flexDirection: 'row',
-                                justifyContent:'center',
+                                justifyContent: 'center',
                                 backgroundColor: 'black',
                             }}
-                            onPress={() =>addOrderToFirebase()}>
+                            onPress={() =>{ addOrderToFirebase()
+                            setModalVisible(false)}}>
                             <Text style={{ color: 'white' }}>Checkout</Text>
                         </TouchableOpacity>
                     </View>
 
                 </View>
-                
+
 
             </View>
         )
@@ -130,7 +142,29 @@ export default function ViewCart({navigation}) {
                     </View>
                 </View> :
 
-                <></>}
+                <></>}   
+            {loading ? (
+        <View
+          style={{
+            backgroundColor: "black",
+            position: "absolute",
+            opacity: 0.6,
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <LottieView
+            style={{ height: 200 }}
+            source={require("../../assets/animations/scanner.json")}
+            autoPlay
+            speed={3}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
         </>
 
 
